@@ -13,7 +13,7 @@ public:
     Player(string name) : name(name), ca(4), ma(2), farm{2, 0, 0, 0},
     mine{2, 0, 0, 0}, lab{1, 0, 0, 0}, idle_worker(1), blue_tokens(16), yellow_tokens(18) {};
 
-    endTurn();
+    void endTurn();
 private:
     string name;
     int ca;
