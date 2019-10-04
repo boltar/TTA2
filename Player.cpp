@@ -3,65 +3,46 @@
 //
 
 #include "Player.h"
+#include "GameEngine.h"
 
-void Player::endTurn() {
-}
-//  4   4   4   4   4    2
-// ___ ___ ___ ___ ___ |    |
-// -6  -4  -3  -2  -1  |    |    consumption
-//     7   5   4   3   | 2  |    cost to increase pop
-// 2   2   2   1   1   |    |    happy faces
+void Player::EndTurn() {
 
-// 4 4 4 4 0 | 1
-// 1 discontent
+// discard military cards if needed
+// determine uprising
+// if no uprising, then do production phase
 
-// 4 4 4 4 0 | 0
-// 1 angry
-
-// 4 4 4 3 0 | 1
-// 1 discontent
-
-int getFoodConsumed(int yellow_tokens) {
-    if (yellow_tokens > 16) return 0;
-    if (yellow_tokens > 12) return 1;
-    if (yellow_tokens > 8) return 2;
-    if (yellow_tokens > 4) return 3;
-    if (yellow_tokens > 0) return 4;
-    return 6; // max
+// draw military cards, if military actions available
 }
 
-int getCostToIncreasePopulation(int yellow_tokens) {
-    if (yellow_tokens > 16) return 2;
-    if (yellow_tokens > 12) return 3;
-    if (yellow_tokens > 8) return 4;
-    if (yellow_tokens > 4) return 5;
-    if (yellow_tokens > 0) return 7;
-    return -1; // can't raise more pop
+void Player::ProductionPhase() {
+    science += science_rating;
+    culture += culture_rating;
+    int corruption = GameEngine::CalculateCorruption(blue_tokens);
+    if (rock >= corruption) {
+        rock -= corruption;
+    } else if (rock + food >= corruption) {
+        // couldn't pay for corruption with rock only, so involve food
+        corruption -= rock;
+        rock = 0; // remove all rock
+        food -= corruption; // remove the rest in food
+    } else {
+        // couldn't pay for corruption with rock and food, so pay with food
+        food -= corruption;
+        if (food < 0)
+            food = 0;
+    }
+
+    food += GetFoodProduction();
+    food -= GameEngine::GetFoodConsumed(yellow_tokens);
+    // evaluate starvation
+    rock += GetRockProduction();
+
 }
 
-int getHappyFacesRequired(int yellow_tokens) {
-    if (yellow_tokens > 16) return 0;
-    if (yellow_tokens > 12) return 1;
-    if (yellow_tokens > 10) return 2;
-    if (yellow_tokens > 8) return 3;
-    if (yellow_tokens > 6) return 4;
-    if (yellow_tokens > 4) return 5;
-    if (yellow_tokens > 2) return 6;
-    if (yellow_tokens > 0) return 7;
-    return 8; // max
-}
+void Player::BuildFarm(int farmLevel) {
+    //Boost::assert farmLevel <= 3;
+    //Boost::assert idle_worker > 0;
 
-int getDiscontentWorkers(int yellow_tokens, int happy_faces) {
-    int discontented_workers = getHappyFacesRequired(yellow_tokens) - happy_faces;
-
-    // if all happy is satisfied, then no discontented workers are present
-    return discontented_workers > 0 ? discontented_workers : 0;
-}
-
-int getAngryWorkers(int yellow_tokens, int idle_workers, int happy_faces) {
-
-    int discontent_workers = getDiscontentWorkers(yellow_tokens, happy_faces);
-    int angry_workers = discontent_workers - idle_workers;
-
-    return angry_workers > 0 ? angry_workers : 0;
+    farm[farmLevel]++;
+    idle_worker--;
 }

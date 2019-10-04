@@ -18,10 +18,6 @@ protected:
 
 };
 
-TEST(basic_check, test_eq) {
-    EXPECT_EQ(1, 1);
-}
-
 TEST(GameEngineTest, test_food_consumed) {
 
     EXPECT_EQ(GameEngine::GetFoodConsumed(18), 0);
@@ -75,16 +71,16 @@ TEST(GameEngineTest, test_happy_faces_required) {
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(13), 1);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(12), 2);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(11), 2);
-    EXPECT_EQ(GameEngine::GetHappyFacesRequired(10), 2);
-    EXPECT_EQ(GameEngine::GetHappyFacesRequired(9), 2);
+    EXPECT_EQ(GameEngine::GetHappyFacesRequired(10), 3);
+    EXPECT_EQ(GameEngine::GetHappyFacesRequired(9), 3);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(8), 4);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(7), 4);
-    EXPECT_EQ(GameEngine::GetHappyFacesRequired(6), 4);
-    EXPECT_EQ(GameEngine::GetHappyFacesRequired(5), 4);
+    EXPECT_EQ(GameEngine::GetHappyFacesRequired(6), 5);
+    EXPECT_EQ(GameEngine::GetHappyFacesRequired(5), 5);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(4), 6);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(3), 6);
-    EXPECT_EQ(GameEngine::GetHappyFacesRequired(2), 6);
-    EXPECT_EQ(GameEngine::GetHappyFacesRequired(1), 6);
+    EXPECT_EQ(GameEngine::GetHappyFacesRequired(2), 7);
+    EXPECT_EQ(GameEngine::GetHappyFacesRequired(1), 7);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(0), 8);
 }
 
@@ -96,16 +92,16 @@ TEST(GameEngineTest, test_happy_faces_required) {
 
 TEST(GameEngineTest, test_discontent_workers) {
     int answers[19][9] = { {8, 7, 6, 5, 4, 3, 2, 1, 0},  // 0 yellow tokens, 0-8 happy faces
-                           {6, 5, 4, 3, 2, 1, 0, 0, 0},  // 1 yellow token
-                           {6, 5, 4, 3, 2, 1, 0, 0, 0},  // 2 yellow token
+                           {7, 6, 5, 4, 3, 2, 1, 0, 0},  // 1 yellow token
+                           {7, 6, 5, 4, 3, 2, 1, 0, 0},  // 2 yellow token
                            {6, 5, 4, 3, 2, 1, 0, 0, 0},  // 3 yellow token
                            {6, 5, 4, 3, 2, 1, 0, 0, 0},  // 4 yellow token
-                           {4, 3, 2, 1, 0, 0, 0, 0, 0},  // 5 yellow token
-                           {4, 3, 2, 1, 0, 0, 0, 0, 0},  // 6 yellow token
+                           {5, 4, 3, 2, 1, 0, 0, 0, 0},  // 5 yellow token
+                           {5, 4, 3, 2, 1, 0, 0, 0, 0},  // 6 yellow token
                            {4, 3, 2, 1, 0, 0, 0, 0, 0},  // 7 yellow token
                            {4, 3, 2, 1, 0, 0, 0, 0, 0},  // 8
-                           {2, 1, 0, 0, 0, 0, 0, 0, 0},  //9
-                           {2, 1, 0, 0, 0, 0, 0, 0, 0},  //10
+                           {3, 2, 1, 0, 0, 0, 0, 0, 0},  //9
+                           {3, 2, 1, 0, 0, 0, 0, 0, 0},  //10
                            {2, 1, 0, 0, 0, 0, 0, 0, 0},  //11
                            {2, 1, 0, 0, 0, 0, 0, 0, 0},  //12
                            {1, 0, 0, 0, 0, 0, 0, 0, 0},  //13
@@ -150,3 +146,12 @@ TEST(GameEngineTest, test_angry_workers) {
         }
     }
 }
+
+TEST(GameEngineTest, test_corruption) {
+    int answers[] = {-6, -4, -4, -4, -4, -4, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+    for (int blue_tokens = 0; blue_tokens < 20; blue_tokens++) {
+        EXPECT_EQ(GameEngine::CalculateCorruption(blue_tokens), answers[blue_tokens]);
+    }
+}
+

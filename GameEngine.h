@@ -13,6 +13,7 @@ public:
     static int GetHappyFacesRequired(int yellow_tokens);
     static int GetDiscontentWorkers(int yellow_tokens, int happy_faces);
     static int GetAngryWorkers(int discontented_workers, int idle_workers);
+    static int CalculateCorruption(int blue_tokens);
 };
 
 
