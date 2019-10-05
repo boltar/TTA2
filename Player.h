@@ -32,6 +32,8 @@ public:
     int GetIdleWorkers() { return idle_worker;}
     int GetRocks() {return rock;}
     int GetFood() {return food;}
+    int GetScience() {return science;}
+    int GetCulture() {return culture;}
 
 private:
     string name;
@@ -39,12 +41,12 @@ private:
     int ma = 2;
     int food = 0;
 //    int food_rating;
-    int rock;
+    int rock = 0;
 //    int rock_rating;
-    int science;
-    int science_rating;
-    int culture;
-    int culture_rating;
+    int science = 0;
+    int science_rating = 0;
+    int culture = 0;
+    int culture_rating = 0;
     int idle_worker = 1;
     int blue_tokens = 16;       // not in use
     int yellow_tokens = 18;     // not counting idle

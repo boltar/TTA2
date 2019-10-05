@@ -36,6 +36,8 @@ void Player::ProductionPhase() {
     food -= GameEngine::GetFoodConsumed(yellow_tokens);
     // evaluate starvation
     rock += GetRockProduction();
+    science += GetScienceProduction();
+    culture += GetCultureProduction();
 
 }
 
