@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include "GameEngine.h"
+#include <boost/assert.hpp>
 
 void Player::EndTurn() {
 
@@ -42,9 +43,17 @@ void Player::ProductionPhase() {
 }
 
 void Player::BuildFarm(int farmLevel) {
-    //Boost::assert farmLevel <= 3;
-    //Boost::assert idle_worker > 0;
-
-    farm[farmLevel]++;
+    BOOST_ASSERT_MSG(idle_worker > 0, "must have atleast one idle worker");
+    BOOST_ASSERT_MSG(rock >= farm.GetRockCostToBuild(farmLevel), "not enough rocks");
+    BOOST_ASSERT_MSG(farm_tech[farmLevel], "not able to build that level of farm");
+    farm.Build(farmLevel);
     idle_worker--;
+}
+
+void Player::DevelopFarmTech(int farmLevel) {
+    BOOST_ASSERT_MSG(science >= farm.GetScienceCostToBuild(farmLevel), "not enough science");
+
+}
+int Player::GetFoodProduction() {
+    return farm.GetFoodProduced();
 }
