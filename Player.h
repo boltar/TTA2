@@ -36,6 +36,7 @@ public:
     int GetFood() {return food;}
     int GetScience() {return science;}
     int GetCulture() {return culture;}
+    void IncreasePop();
 
 private:
     string name;
@@ -56,7 +57,7 @@ private:
 //    Farm farm[4] = {2, 0, 0, 0}; // agriculture, irrigation, selective breeding, mechanized ag
     Building farm = Building(farmStats);
     Building mine = Building(farmStats);
-    bool farm_tech[4] = {false, false, false, false};
+    bool farm_tech[4] = {true, false, false, false};
 //    int mine[4] = {2, 0, 0, 0}; // bronze, iron, coal, oil
     int lab[4] = {1, 0, 0, 0};  // philosophy, alchemy, scientific method, computers
     int temple[3] = {0,0,0};    // religion, theology, organized religion

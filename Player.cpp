@@ -13,6 +13,8 @@ void Player::EndTurn() {
 // if no uprising, then do production phase
 
 // draw military cards, if military actions available
+// if not uprising
+    ProductionPhase();
 }
 
 void Player::ProductionPhase() {
@@ -43,10 +45,21 @@ void Player::ProductionPhase() {
 }
 
 void Player::BuildFarm(int farmLevel) {
-    BOOST_ASSERT_MSG(idle_worker > 0, "must have atleast one idle worker");
-    BOOST_ASSERT_MSG(rock >= farm.GetRockCostToBuild(farmLevel), "not enough rocks");
-    BOOST_ASSERT_MSG(farm_tech[farmLevel], "not able to build that level of farm");
+    if (!idle_worker) {
+        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
+        return;
+    }
+
+    if (rock < farm.GetRockCostToBuild(farmLevel)) {
+        BOOST_ASSERT_MSG(0, "not enough rocks");
+        return;
+    }
+
+    if (!farm_tech[farmLevel]) {
+        BOOST_ASSERT_MSG(0, "not able to build that level of farm");
+    }
     farm.Build(farmLevel);
+    rock -= farm.GetRockCostToBuild(farmLevel);
     idle_worker--;
 }
 
@@ -56,4 +69,15 @@ void Player::DevelopFarmTech(int farmLevel) {
 }
 int Player::GetFoodProduction() {
     return farm.GetFoodProduced();
+}
+
+void Player::IncreasePop() {
+
+    BOOST_ASSERT_MSG(yellow_tokens, "not enough yellow tokens left");
+    if (!yellow_tokens) return;
+
+    if (GameEngine::GetCostToIncreasePopulation(yellow_tokens) <= GetFood()) {
+        yellow_tokens--;
+        idle_worker++;
+    }
 }

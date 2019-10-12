@@ -12,10 +12,12 @@ public:
 protected:
 
     void SetUp() override {
+//    cout << "SetUp Alice" << endl;
         player = new Player("Alice");
     }
 
     void SetUp(string name) {
+//    cout << "SetUp Bob" << endl;
         player = new Player(name);
     }
 
@@ -32,9 +34,8 @@ protected:
 
 TEST_F(PlayerTest, test_initial_conditions) {
 
-    SetUp("Bob");
     // test initial conditions
-    EXPECT_EQ(player->GetName(), "Bob");
+    EXPECT_EQ(player->GetName(), "Alice");
     EXPECT_EQ(player->GetFoodProduction(), 2);
     EXPECT_EQ(player->GetRockProduction(), 2);
     EXPECT_EQ(player->GetCultureProduction(), 0);
@@ -45,9 +46,8 @@ TEST_F(PlayerTest, test_initial_conditions) {
 
 TEST_F(PlayerTest, test_production_phase) {
 
-    // test after 1st turn
+    // test after 1st turn (selecting initial cards)
     player->EndTurn();
-    player->ProductionPhase();
     EXPECT_EQ(player->GetFoodProduction(), 2);
     EXPECT_EQ(player->GetRockProduction(), 2);
     EXPECT_EQ(player->GetCultureProduction(), 0);
@@ -56,10 +56,10 @@ TEST_F(PlayerTest, test_production_phase) {
 }
 
 TEST_F(PlayerTest, test_production_phase_after_1_farm) {
-    EXPECT_EQ(player->GetRocks(), 2); // player is alice, not bob?????? <-----------
+    player->EndTurn(); //initial card draw
 
-    player->BuildFarm(0); // 0, 1, 2, 3
-    player->ProductionPhase();
+    // first real turn
+    player->BuildFarm(0);
     player->EndTurn();
 
     EXPECT_EQ(player->GetRocks(), 2);
@@ -69,12 +69,19 @@ TEST_F(PlayerTest, test_production_phase_after_1_farm) {
     EXPECT_EQ(player->GetCultureProduction(), 0);
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 0);
-    EXPECT_EQ(player->GetScience(), 1);
+    EXPECT_EQ(player->GetScience(), 2);
 }
 
 TEST_F(PlayerTest, test_production_phase_after_2_farms) {
-    player->BuildFarm(0); // 0, 1, 2, 3
-    player->ProductionPhase();
+    player->EndTurn(); //initial card draw
+
+    // first real turn
+    player->BuildFarm(0);
+    player->EndTurn();
+
+    // second turn
+    player->IncreasePop();
+    player->BuildFarm(0);
     player->EndTurn();
 
     EXPECT_EQ(player->GetRocks(), 2);
@@ -84,6 +91,6 @@ TEST_F(PlayerTest, test_production_phase_after_2_farms) {
     EXPECT_EQ(player->GetCultureProduction(), 0);
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 0);
-    EXPECT_EQ(player->GetScience(), 1);
+    EXPECT_EQ(player->GetScience(), 3);
 }
 
