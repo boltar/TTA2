@@ -13,7 +13,7 @@ class BuildingStats {
 public:
     virtual BuildingType getBuildingType() const = 0;
     virtual array<int, 4> getRockCostToBuild() const = 0;
-    virtual array<int, 4> getScienceCostToBuild() const = 0;
+    virtual array<int, 4> getScienceCostToDevelop() const = 0;
     virtual array<int, 4> getRocksProduced() const = 0;
     virtual array<int, 4> getFoodProduced() const = 0;
     virtual array<int, 4> getCultureProduced() const = 0;
@@ -23,17 +23,14 @@ public:
 };
 
 class MineStats : public BuildingStats {
-
 public:
-
     static MineStats& GetInstance() {
         static MineStats instance;
         return instance;
     }
-
     BuildingType getBuildingType() const override { return BuildingType::Mine;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{2, 5, 8, 11};}
-    array<int, 4> getScienceCostToBuild() const override {return array<int, 4>{0, 5, 7, 9};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 5, 7, 9};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{1, 2, 3, 5};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
@@ -43,17 +40,14 @@ public:
 };
 
 class FarmStats : public BuildingStats {
-
 public:
-
     static FarmStats& GetInstance() {
         static FarmStats instance;
         return instance;
     }
-
     BuildingType getBuildingType() const override { return BuildingType::Farm;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{2, 4, 6, 8};}
-    array<int, 4> getScienceCostToBuild() const override {return array<int, 4>{0, 3, 5, 7};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 3, 5, 7};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{1, 2, 3, 5};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
@@ -61,77 +55,91 @@ public:
     array<int, 4> getHappinessProvided() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getMilitaryProvided() const override {return array<int, 4>{0, 0, 0, 0};}
 };
-#if 0
-class LabStats : public BuildingStats {
-    LabStats() {
-        b = BuildingType::Lab;
-        int RockCostToBuild[4] = {3, 6, 8, 11};
-        int ScienceCostToBuild[4] = {0, 4, 6, 8};
-        int RocksProduced[4] = {0, 0, 0, 0};
-        int FoodProduced[4] = {0, 0, 0, 0};
-        int CultureProduced[4] = {0, 0, 0, 0};
-        int ScienceProduced[4] = {1, 2, 3, 5};
-        int HappinessProvided[4] = {0, 0, 0, 0};
-        int MilitaryProvided[4] = {0, 0, 0, 0};
-    }
-};
-
 class TempleStats : public BuildingStats {
-    TempleStats() {
-        b = BuildingType::Temple;
-        int RockCostToBuild[4] = {3, 5, 7, -1};
-        int ScienceCostToBuild[4] = {0, 2, 4, -1};
-        int RocksProduced[4] = {0, 0, 0, 0};
-        int FoodProduced[4] = {0, 0, 0, 0};
-        int CultureProduced[4] = {1, 1, 1, 0};
-        int ScienceProduced[4] = {0, 0, 0, 0};
-        int HappinessProvided[4] = {1, 2, 3, 0};
-        int MilitaryProvided[4] = {0, 0, 0, 0};
+public:
+    static TempleStats& GetInstance() {
+        static TempleStats instance;
+        return instance;
     }
+    BuildingType getBuildingType() const override { return BuildingType::Temple;}
+    array<int, 4> getRockCostToBuild() const override {return array<int, 4>{3, 5, 7, 0};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 2, 4, 0};}
+    array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getCultureProduced() const override {return array<int, 4>{1, 1, 1, 0};}
+    array<int, 4> getScienceProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getHappinessProvided() const override {return array<int, 4>{1, 2, 3, 0};}
+    array<int, 4> getMilitaryProvided() const override {return array<int, 4>{0, 0, 0, 0};}
 };
 
-class ArenaStats : public BuildingStats {
-    ArenaStats() {
-        b = BuildingType::Arena;
-        int RockCostToBuild[4] = {0, 3, 5, 7};
-        int ScienceCostToBuild[4] = {0, 3, 5, 7};
-        int RocksProduced[4] = {0, 0, 0, 0};
-        int FoodProduced[4] = {0, 0, 0, 0};
-        int CultureProduced[4] = {0, 0, 0, 0};
-        int ScienceProduced[4] = {0, 0, 0, 0};
-        int HappinessProvided[4] = {0, 2, 3, 4};
-        int MilitaryProvided[4] = {0, 1, 2, 4};
+class LabStats : public BuildingStats {
+public:
+    static LabStats& GetInstance() {
+        static LabStats instance;
+        return instance;
     }
+    BuildingType getBuildingType() const override { return BuildingType::Lab;}
+    array<int, 4> getRockCostToBuild() const override {return array<int, 4>{3, 6, 8, 11};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 4, 6, 8};}
+    array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getScienceProduced() const override {return array<int, 4>{1, 2, 3, 5};}
+    array<int, 4> getHappinessProvided() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getMilitaryProvided() const override {return array<int, 4>{0, 0, 0, 0};}
 };
 
 class LibraryStats : public BuildingStats {
-    LibraryStats() {
-        b = BuildingType::Library;
-        int RockCostToBuild[4] = {0, 3, 8, 11};
-        int ScienceCostToBuild[4] = {0, 3, 6, 9};
-        int RocksProduced[4] = {0, 0, 0, 0};
-        int FoodProduced[4] = {0, 0, 0, 0};
-        int CultureProduced[4] = {0, 1, 2, 3};
-        int ScienceProduced[4] = {0, 1, 2, 3};
-        int HappinessProvided[4] = {0, 0, 0, 0};
-        int MilitaryProvided[4] = {0, 0, 0, 0};
+public:
+    static LibraryStats& GetInstance() {
+        static LibraryStats instance;
+        return instance;
     }
+    BuildingType getBuildingType() const override { return BuildingType::Library;}
+    array<int, 4> getRockCostToBuild() const override {return array<int, 4>{0, 3, 8, 11};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 3, 6, 9};}
+    array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 1, 2, 3};}
+    array<int, 4> getScienceProduced() const override {return array<int, 4>{0, 1, 2, 3};}
+    array<int, 4> getHappinessProvided() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getMilitaryProvided() const override {return array<int, 4>{0, 0, 0, 0};}
+};
+
+class ArenaStats : public BuildingStats {
+public:
+    static ArenaStats& GetInstance() {
+        static ArenaStats instance;
+        return instance;
+    }
+    BuildingType getBuildingType() const override { return BuildingType::Arena;}
+    array<int, 4> getRockCostToBuild() const override {return array<int, 4>{0, 3, 5, 7};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 3, 5, 7};}
+    array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getScienceProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getHappinessProvided() const override {return array<int, 4>{0, 2, 3, 4};}
+    array<int, 4> getMilitaryProvided() const override {return array<int, 4>{0, 2, 3, 4};}
 };
 
 class TheaterStats : public BuildingStats {
-    TheaterStats() {
-        b = BuildingType::Theater;
-        int RockCostToBuild[4] = {0, 4, 8, 11};
-        int ScienceCostToBuild[4] = {0, 4, 7, 10};
-        int RocksProduced[4] = {0, 0, 0, 0};
-        int FoodProduced[4] = {0, 0, 0, 0};
-        int CultureProduced[4] = {0, 2, 3, 4};
-        int ScienceProduced[4] = {0, 0, 0, 0};
-        int HappinessProvided[4] = {0, 1, 1, 1};
-        int MilitaryProvided[4] = {0, 0, 0, 0};
+public:
+    static TheaterStats& GetInstance() {
+        static TheaterStats instance;
+        return instance;
     }
+    BuildingType getBuildingType() const override { return BuildingType::Theater;}
+    array<int, 4> getRockCostToBuild() const override {return array<int, 4>{0, 4, 8, 11};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 4, 7, 10};}
+    array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 2, 3, 4};}
+    array<int, 4> getScienceProduced() const override {return array<int, 4>{0, 0, 0, 0};}
+    array<int, 4> getHappinessProvided() const override {return array<int, 4>{0, 1, 1, 1};}
+    array<int, 4> getMilitaryProvided() const override {return array<int, 4>{0, 0, 0, 0};}
 };
-#endif
+
 class Building {
 
 public:
@@ -141,11 +149,9 @@ public:
         array<int, 4> ret = bs.getRockCostToBuild();
         return bs.getRockCostToBuild()[level];
     }
-    int GetScienceCostToBuild(int level) {return bs.getScienceCostToBuild()[level];}
+    int GetScienceCostToBuild(int level) {return bs.getScienceCostToDevelop()[level];}
     virtual int GetRocksProduced(int level) {return bs.getRocksProduced()[level];}
-//    virtual int GetRocksProduced() {return bs.getRocksProduced()[0] * + }
     virtual int GetFoodProduced(int level) {return bs.getFoodProduced()[level];}
-//    virtual int GetFoodProduced() {return bs.FoodProduced[0] * count[0] + bs.FoodProduced[1]  * count[1] + bs.FoodProduced[2] * count[2] + bs.FoodProduced[3] * count[3];}
     virtual int GetCultureProduced(int level) {return bs.getCultureProduced()[level];}
     virtual int GetScienceProduced(int level) {return bs.getScienceProduced()[level];}
     virtual int GetHappinessProvided(int level) {return bs.getHappinessProvided()[level];}

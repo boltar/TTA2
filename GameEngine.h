@@ -10,6 +10,14 @@
 #include "Constants.h"
 
 using namespace std;
+
+enum class Status {
+    OK,
+    NOT_ENOUGH_ROCKS,
+    NOT_ENOUGH_IDLE_WORKERS,
+    NOT_ENOUGH_SCIENCE,
+    NO_TECH_DEVELOPED,
+};
 enum class BuildingType {
     Mine,
     Farm,

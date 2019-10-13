@@ -40,72 +40,51 @@ void Player::ProductionPhase() {
     // evaluate starvation
     rock += GetRockProduction();
     science += GetScienceProduction();
-//    culture += GetCultureProduction();
+    culture += GetCultureProduction();
 
 }
 
-void Player::Build(Building& b, int level) {
+Status Player::Build(Building& b, int level) {
     if (!idle_worker) {
-        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
-        return;
+//        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
+        return Status::NOT_ENOUGH_IDLE_WORKERS;
     }
 
     if (rock < b.GetRockCostToBuild(level)) {
-        BOOST_ASSERT_MSG(0, "not enough rocks");
-        return;
+//        BOOST_ASSERT_MSG(0, "not enough rocks");
+        return Status::NOT_ENOUGH_ROCKS;
     }
 
     if (!b.isTechDeveloped(level)) {
-        BOOST_ASSERT_MSG(0, "not able to build that level of farm");
+//        BOOST_ASSERT_MSG(0, "not able to build that level of building");
+        return Status::NO_TECH_DEVELOPED;
     }
-    farm.Build(level);
-    rock -= farm.GetRockCostToBuild(level);
+    b.Build(level);
+    rock -= b.GetRockCostToBuild(level);
     idle_worker--;
-
-
+    return Status::OK;
+}
+Status Player::BuildTemple(int level) {
+    return Build(temple, level);
 }
 
-void Player::BuildFarm(int farmLevel) {
-    if (!idle_worker) {
-        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
-        return;
-    }
-
-    if (rock < farm.GetRockCostToBuild(farmLevel)) {
-        BOOST_ASSERT_MSG(0, "not enough rocks");
-        return;
-    }
-
-    if (!farm_tech[farmLevel]) {
-        BOOST_ASSERT_MSG(0, "not able to build that level of farm");
-    }
-    farm.Build(farmLevel);
-    rock -= farm.GetRockCostToBuild(farmLevel);
-    idle_worker--;
+Status Player::BuildFarm(int level) {
+    return Build(farm, level);
 }
 
-void Player::BuildMine(int level) {
-    if (!idle_worker) {
-        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
-        return;
-    }
-
-    if (rock < mine.GetRockCostToBuild(level)) {
-        BOOST_ASSERT_MSG(0, "not enough rocks");
-        return;
-    }
-
-    if (!mine_tech[level]) {
-        BOOST_ASSERT_MSG(0, "not able to build that level of mine");
-    }
-    mine.Build(level);
-    rock -= mine.GetRockCostToBuild(level);
-    idle_worker--;
+Status Player::BuildMine(int level) {
+    return Build(mine, level);
 }
 
-void Player::DevelopFarmTech(int farmLevel) {
-    BOOST_ASSERT_MSG(science >= farm.GetScienceCostToBuild(farmLevel), "not enough science");
+Status Player::BuildArena(int level) {
+    return Build(arena, level);
+}
+Status Player::BuildLibrary(int level) {
+    return Build(library, level);
+}
 
+Status Player::BuildLab(int level) {
+    return Build(lab, level);
 }
 
 void Player::IncreasePop() {
@@ -116,5 +95,6 @@ void Player::IncreasePop() {
     if (GameEngine::GetCostToIncreasePopulation(yellow_tokens) <= GetFood()) {
         yellow_tokens--;
         idle_worker++;
+        food -= GameEngine::GetCostToIncreasePopulation(yellow_tokens);
     }
 }

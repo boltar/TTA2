@@ -15,16 +15,22 @@ class Player {
 
 public:
 //    explicit Player() = delete;
-    explicit Player(string name) : name(name), farm(FarmStats::GetInstance()), mine(MineStats::GetInstance()) {
+    explicit Player(string name) : name(name), farm(FarmStats::GetInstance()), mine(MineStats::GetInstance()),
+            lab(LabStats::GetInstance()), temple(TempleStats::GetInstance()), arena(ArenaStats::GetInstance()),
+            theater(TheaterStats::GetInstance()), library(LibraryStats::GetInstance()){
 
+        // initial starting tech
         farm.DevelopTech(0);
         mine.DevelopTech(0);
+        temple.DevelopTech(0);
+        lab.DevelopTech(0);
 
+        // initial starting buildings
         farm.Build(0);
         farm.Build(0);
         mine.Build(0);
         mine.Build(0);
-
+        lab.Build(0);
     }
 
     void EndTurn();
@@ -48,25 +54,52 @@ public:
     int GetScienceProduction() {
         int total = 0;
         for (int i = 0; i < 4; i++) {
-//            total += lab.GetScienceProduced(i) * lab.GetBuilt(i);
+            total += lab.GetScienceProduced(i) * lab.GetBuilt(i);
         }
         return total;
 
     }
+    int GetCultureProduction() {
+        int total = 0;
+        for (int i = 0; i < 4; i++) {
+            total += temple.GetCultureProduced(i) * temple.GetBuilt(i);
+        }
+        return total;
+    }
+    int GetMilitaryFromBuildings() {
+        int total = 0;
+        for (int i = 0; i < 4; i++) {
+            total += arena.GetMilitaryProvided(i) * temple.GetBuilt(i);
+        }
+        return total;
+    }
 
-//    int GetCultureProduction() {return theater[0] * 2 + theater[1] * 3 + theater[2] * 4 +
-//                                       library[0] + library[1]*2 + library[2]*3 +
-//                                       temple[0] + temple[1] + temple[2];}
-//    int GetHappy() {return temple[0] + temple[1]*2 + temple[2]*3 +
-//                           arena[0]*2 + arena[1]*3 + arena[2]*4 +
-//                           theater[0] + theater[1] + theater[2];}
+    int GetYellowTokens() {
+        return yellow_tokens;
+    }
 
+    int GetBlueTokens() {
+        return blue_tokens;
+    }
 
-    void BuildFarm(int farmLevel);
-    void BuildMine(int level);
+    int GetHappy() {
+        int total = 0;
+        for (int i = 0; i < 4; i++) {
+            total += temple.GetHappinessProvided(i) * temple.GetBuilt();
+            total += arena.GetHappinessProvided(i) * arena.GetBuilt();
+            total += theater.GetHappinessProvided(i) * theater.GetBuilt();
+        }
+        return total;
+    }
+    Status BuildTemple(int level);
+    Status BuildFarm(int farmLevel);
+    Status BuildMine(int level);
+    Status BuildTheater(int level);
+    Status BuildArena(int level);
+    Status BuildLab(int level);
+    Status BuildLibrary(int level);
 
-    void Build(Building& b, int level);
-    void DevelopFarmTech(int farmLevel);
+    Status Build(Building& b, int level);
     int GetIdleWorkers() { return idle_worker;}
     int GetRocks() {return rock;}
     int GetFood() {return food;}
@@ -90,7 +123,7 @@ private:
     int blue_tokens = 16;       // not in use
     int yellow_tokens = 18;     // not counting idle
 
-    Building farm, mine;
+    Building farm, mine, lab, temple, library, theater, arena;
     bool farm_tech[4] = {true, false, false, false};
     bool mine_tech[4] = {true, false, false, false};
 
