@@ -6,6 +6,9 @@
 #include "GameEngine.h"
 #include <boost/assert.hpp>
 
+void Player::StartTurn() {
+    ResetActions();
+}
 void Player::EndTurn() {
 
 // discard military cards if needed
@@ -15,11 +18,10 @@ void Player::EndTurn() {
 // draw military cards, if military actions available
 // if not uprising
     ProductionPhase();
+
 }
 
 void Player::ProductionPhase() {
-    science += science_rating;
-    culture += culture_rating;
     int corruption = GameEngine::CalculateCorruption(blue_tokens);
     if (rock >= corruption) {
         rock -= corruption;
@@ -45,6 +47,11 @@ void Player::ProductionPhase() {
 }
 
 Status Player::Build(Building& b, int level) {
+
+    if (!ca) {
+        return Status::NOT_ENOUGH_CIVIL_ACTIONS;
+    }
+
     if (!idle_worker) {
 //        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
         return Status::NOT_ENOUGH_IDLE_WORKERS;
@@ -62,6 +69,7 @@ Status Player::Build(Building& b, int level) {
     b.Build(level);
     rock -= b.GetRockCostToBuild(level);
     idle_worker--;
+    UseCA();
     return Status::OK;
 }
 Status Player::BuildTemple(int level) {

@@ -6,6 +6,7 @@
 #define TTA_PLAYER_H
 #include <string>
 #include <map>
+#include <boost/assert.hpp>
 #include "Building.h"
 #include "GameEngine.h"
 
@@ -33,6 +34,7 @@ public:
         lab.Build(0);
     }
 
+    void StartTurn();
     void EndTurn();
     void ProductionPhase();
 
@@ -106,19 +108,24 @@ public:
     int GetScience() {return science;}
     int GetCulture() {return culture;}
     void IncreasePop();
+    int GetMA() {return ma;}
+    int GetCA() {return ca;}
+    int getMAMax() {return ma_max;}
+    int getCAMax() {return ca_max;}
+    void UseCA() {BOOST_ASSERT_MSG(ca, "CA is ZERO"); ca--;}
+    void UseMA() {BOOST_ASSERT_MSG(ma, "MA is ZERO"); ma--;}
+    void ResetActions() {ca = ca_max; ma = ma_max;}
     map<BuildingType, bool [Const::MaxBuildingLevels]> tech;
 private:
     string name;
-    int ca = 4;
-    int ma = 2;
+    int ca = 4; // civil actions
+    int ma = 2; // military actions
+    int ca_max = 4;
+    int ma_max = 2;
     int food = 0;
-//    int food_rating;
     int rock = 0;
-//    int rock_rating;
     int science = 0;
-    int science_rating = 0;
     int culture = 0;
-    int culture_rating = 0;
     int idle_worker = 1;
     int blue_tokens = 16;       // not in use
     int yellow_tokens = 18;     // not counting idle

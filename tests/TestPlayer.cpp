@@ -44,6 +44,7 @@ protected:
         player = new Player("Alice");
         player->EndTurn();
 
+        player->StartTurn();
         player->BuildFarm(0);
         player->EndTurn();
     }
@@ -59,6 +60,7 @@ protected:
         player = new Player("Alice");
         player->EndTurn();
 
+        player->StartTurn(); // real first turn
         player->BuildMine(0);
         player->EndTurn();
     }
@@ -112,6 +114,7 @@ TEST_F(FirstPhaseTestBuildingFarm, test_production_phase_after_1_farm) {
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 0);
     EXPECT_EQ(player->GetScience(), 2);
+    EXPECT_EQ(player->GetCA(), 3);
 }
 
 TEST_F(FirstPhaseTestBuildingFarm, build_2nd_farm) {
@@ -129,6 +132,7 @@ TEST_F(FirstPhaseTestBuildingFarm, build_2nd_farm) {
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 0);
     EXPECT_EQ(player->GetScience(), 3);
+    EXPECT_EQ(player->GetCA(), 2);
 }
 
 
@@ -142,6 +146,7 @@ TEST_F(FirstPhaseTestBuildingMine, test_production_phase_after_1_mine) {
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 0);
     EXPECT_EQ(player->GetScience(), 2);
+    EXPECT_EQ(player->GetCA(), 3);
 }
 
 TEST_F(FirstPhaseTestBuildingMine, build_2nd_mine) {
@@ -157,6 +162,7 @@ TEST_F(FirstPhaseTestBuildingMine, build_2nd_mine) {
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 0);
     EXPECT_EQ(player->GetScience(), 3);
+    EXPECT_EQ(player->GetCA(), 2);
 }
 
 TEST_F(FirstPhaseTestBuildingMine, build_lab) {
@@ -172,6 +178,7 @@ TEST_F(FirstPhaseTestBuildingMine, build_lab) {
     EXPECT_EQ(player->GetScienceProduction(), 2);
     EXPECT_EQ(player->GetCulture(), 0);
     EXPECT_EQ(player->GetScience(), 4);
+    EXPECT_EQ(player->GetCA(), 2);
 }
 
 TEST_F(FirstPhaseTestBuildingMine, build_temple) {
@@ -187,6 +194,7 @@ TEST_F(FirstPhaseTestBuildingMine, build_temple) {
     EXPECT_EQ(player->GetScienceProduction(), 1);
     EXPECT_EQ(player->GetCulture(), 1);
     EXPECT_EQ(player->GetScience(), 3);
+    EXPECT_EQ(player->GetCA(), 2);
 }
 
 

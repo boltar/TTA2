@@ -16,7 +16,10 @@ enum class Status {
     NOT_ENOUGH_ROCKS,
     NOT_ENOUGH_IDLE_WORKERS,
     NOT_ENOUGH_SCIENCE,
+    NOT_ENOUGH_CIVIL_ACTIONS,
+    NOT_EOUGH_MILITARY_ACTIONS,
     NO_TECH_DEVELOPED,
+
 };
 enum class BuildingType {
     Mine,
