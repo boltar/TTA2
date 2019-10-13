@@ -40,7 +40,28 @@ void Player::ProductionPhase() {
     // evaluate starvation
     rock += GetRockProduction();
     science += GetScienceProduction();
-    culture += GetCultureProduction();
+//    culture += GetCultureProduction();
+
+}
+
+void Player::Build(Building& b, int level) {
+    if (!idle_worker) {
+        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
+        return;
+    }
+
+    if (rock < b.GetRockCostToBuild(level)) {
+        BOOST_ASSERT_MSG(0, "not enough rocks");
+        return;
+    }
+
+    if (!b.isTechDeveloped(level)) {
+        BOOST_ASSERT_MSG(0, "not able to build that level of farm");
+    }
+    farm.Build(level);
+    rock -= farm.GetRockCostToBuild(level);
+    idle_worker--;
+
 
 }
 
@@ -63,12 +84,28 @@ void Player::BuildFarm(int farmLevel) {
     idle_worker--;
 }
 
+void Player::BuildMine(int level) {
+    if (!idle_worker) {
+        BOOST_ASSERT_MSG(0, "must have at least one idle worker");
+        return;
+    }
+
+    if (rock < mine.GetRockCostToBuild(level)) {
+        BOOST_ASSERT_MSG(0, "not enough rocks");
+        return;
+    }
+
+    if (!mine_tech[level]) {
+        BOOST_ASSERT_MSG(0, "not able to build that level of mine");
+    }
+    mine.Build(level);
+    rock -= mine.GetRockCostToBuild(level);
+    idle_worker--;
+}
+
 void Player::DevelopFarmTech(int farmLevel) {
     BOOST_ASSERT_MSG(science >= farm.GetScienceCostToBuild(farmLevel), "not enough science");
 
-}
-int Player::GetFoodProduction() {
-    return farm.GetFoodProduced();
 }
 
 void Player::IncreasePop() {

@@ -8,6 +8,9 @@
     <libraryRoots>
       <file path="$PROJECT_DIR$/tests/lib/googletest/include" />
     </libraryRoots>
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/tests/lib" />
+    </excludeRoots>
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
