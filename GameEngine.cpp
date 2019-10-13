@@ -53,6 +53,14 @@ int GameEngine::GetAngryWorkers(int discontented_workers, int idle_workers) {
     return angry_workers > 0 ? angry_workers : 0;
 }
 
+int GameEngine::GetAngryWorkers(int yellow_tokens, int idle_workers, int happy_faces) {
+
+    int discontented_workers = GetDiscontentWorkers(yellow_tokens, happy_faces);
+    int angry_workers = discontented_workers - idle_workers;
+
+    return angry_workers > 0 ? angry_workers : 0;
+}
+
 int GameEngine::CalculateCorruption(int blue_tokens) {
     if (blue_tokens > 10) return 0;
     if (blue_tokens > 5) return -2;

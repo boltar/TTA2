@@ -83,10 +83,8 @@ TEST_F(InitialPhaseTest, test_initial_conditions) {
     EXPECT_EQ(GameEngine::GetCostToIncreasePopulation(player->GetYellowTokens()), 2);
     EXPECT_EQ(GameEngine::GetHappyFacesRequired(player->GetYellowTokens()), 0);
     EXPECT_EQ(GameEngine::GetDiscontentWorkers(player->GetYellowTokens(), player->GetHappy()), 0);
-    EXPECT_EQ(GameEngine::GetAngryWorkers(GameEngine::GetDiscontentWorkers(player->GetYellowTokens(),
-            player->GetHappy()), player->GetIdleWorkers()), 0); // todo: refactor this?
+    EXPECT_EQ(GameEngine::GetAngryWorkers(player->GetYellowTokens(), player->GetIdleWorkers(), player->GetHappy()), 0);
     EXPECT_EQ(GameEngine::CalculateCorruption(player->GetBlueTokens()), 0);
-
 }
 
 
