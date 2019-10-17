@@ -2,13 +2,13 @@
 // Created by t on 9/29/2019.
 //
 
-#ifndef TTA_PLAYER_H
-#define TTA_PLAYER_H
+#ifndef TTA_PLAYER_HPP
+#define TTA_PLAYER_HPP
 #include <string>
 #include <map>
 #include <boost/assert.hpp>
-#include "Building.h"
-#include "GameEngine.h"
+#include "Building.hpp"
+#include "GameEngine.hpp"
 
 using namespace std;
 
@@ -57,6 +57,7 @@ public:
         int total = 0;
         for (int i = 0; i < 4; i++) {
             total += lab.GetScienceProduced(i) * lab.GetBuilt(i);
+            total += library.GetScienceProduced(i) * library.GetBuilt(i);
         }
         return total;
 
@@ -65,6 +66,8 @@ public:
         int total = 0;
         for (int i = 0; i < 4; i++) {
             total += temple.GetCultureProduced(i) * temple.GetBuilt(i);
+            total += theater.GetCultureProduced(i) * theater.GetBuilt(i);
+            total += library.GetCultureProduced(i) * library.GetBuilt(i);
         }
         return total;
     }
@@ -87,9 +90,9 @@ public:
     int GetHappy() {
         int total = 0;
         for (int i = 0; i < 4; i++) {
-            total += temple.GetHappinessProvided(i) * temple.GetBuilt();
-            total += arena.GetHappinessProvided(i) * arena.GetBuilt();
-            total += theater.GetHappinessProvided(i) * theater.GetBuilt();
+            total += temple.GetHappinessProvided(i) * temple.GetBuilt(i);
+            total += arena.GetHappinessProvided(i) * arena.GetBuilt(i);
+            total += theater.GetHappinessProvided(i) * theater.GetBuilt(i);
         }
         return total;
     }
@@ -101,13 +104,21 @@ public:
     Status BuildLab(int level);
     Status BuildLibrary(int level);
 
-    Status Build(Building& b, int level);
+    Status DevelopTemple(int level);
+    Status DevelopTheater(int farmLevel);
+    Status DevelopMine(int level);
+    Status DevelopFarm(int level);
+    Status DevelopArena(int level);
+    Status DevelopLab(int level);
+    Status DevelopLibrary(int level);
+
+
     int GetIdleWorkers() { return idle_worker;}
     int GetRocks() {return rock;}
     int GetFood() {return food;}
     int GetScience() {return science;}
     int GetCulture() {return culture;}
-    void IncreasePop();
+    Status IncreasePop();
     int GetMA() {return ma;}
     int GetCA() {return ca;}
     int getMAMax() {return ma_max;}
@@ -133,8 +144,10 @@ private:
     Building farm, mine, lab, temple, library, theater, arena;
     bool farm_tech[4] = {true, false, false, false};
     bool mine_tech[4] = {true, false, false, false};
+    Status Build(Building& b, int level);
+    Status DevelopTech(Building &b, int level);
 
 };
 
 
-#endif //TTA_PLAYER_H
+#endif //TTA_PLAYER_HPP

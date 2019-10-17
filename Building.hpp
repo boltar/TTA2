@@ -2,11 +2,11 @@
 // Created by t on 10/5/2019.
 //
 
-#ifndef TTA_BUILDING_H
-#define TTA_BUILDING_H
+#ifndef TTA_BUILDING_HPP
+#define TTA_BUILDING_HPP
 #include <numeric>
-#include "Constants.h"
-#include "GameEngine.h"
+#include "Constants.hpp"
+#include "GameEngine.hpp"
 
 
 class BuildingStats {
@@ -30,7 +30,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Mine;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{2, 5, 8, 11};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 5, 7, 9};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 5, 7, 9};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{1, 2, 3, 5};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
@@ -47,7 +47,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Farm;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{2, 4, 6, 8};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 3, 5, 7};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 3, 5, 7};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{1, 2, 3, 5};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
@@ -63,7 +63,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Temple;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{3, 5, 7, 0};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 2, 4, 0};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 2, 4, Const::InvalidTech};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{1, 1, 1, 0};}
@@ -80,7 +80,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Lab;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{3, 6, 8, 11};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 4, 6, 8};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 4, 6, 8};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
@@ -97,7 +97,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Library;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{0, 3, 8, 11};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 3, 6, 9};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 3, 6, 9};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 1, 2, 3};}
@@ -114,7 +114,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Arena;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{0, 3, 5, 7};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 3, 5, 7};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 3, 5, 7};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 0, 0, 0};}
@@ -131,7 +131,7 @@ public:
     }
     BuildingType getBuildingType() const override { return BuildingType::Theater;}
     array<int, 4> getRockCostToBuild() const override {return array<int, 4>{0, 4, 8, 11};}
-    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{0, 4, 7, 10};}
+    array<int, 4> getScienceCostToDevelop() const override {return array<int, 4>{Const::InvalidTech, 4, 7, 10};}
     array<int, 4> getRocksProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getFoodProduced() const override {return array<int, 4>{0, 0, 0, 0};}
     array<int, 4> getCultureProduced() const override {return array<int, 4>{0, 2, 3, 4};}
@@ -159,7 +159,7 @@ public:
 
     void Build(int level) { built[level]++; }
     int GetBuilt(int level) {return built[level];}
-    int GetBuilt() {return std::accumulate(built.begin(), built.end(), 0); }
+//    int GetBuilt() {return std::accumulate(built.begin(), built.end(), 0); }
 
     void DevelopTech(int level) {
         techDeveloped[level] = true;
@@ -177,4 +177,4 @@ private:
 
 
 
-#endif //TTA_BUILDING_H
+#endif //TTA_BUILDING_HPP

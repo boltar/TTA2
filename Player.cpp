@@ -2,8 +2,8 @@
 // Created by t on 9/29/2019.
 //
 
-#include "Player.h"
-#include "GameEngine.h"
+#include "Player.hpp"
+#include "GameEngine.hpp"
 #include <boost/assert.hpp>
 
 void Player::StartTurn() {
@@ -15,9 +15,11 @@ void Player::EndTurn() {
 // determine uprising
 // if no uprising, then do production phase
 
-// draw military cards, if military actions available
-// if not uprising
-    ProductionPhase();
+    // draw military cards, if military actions available
+    if (!GameEngine::GetAngryWorkers(GameEngine::GetDiscontentWorkers(yellow_tokens, GetHappy()), idle_worker)){
+        ProductionPhase();
+
+    }
 
 }
 
@@ -57,15 +59,16 @@ Status Player::Build(Building& b, int level) {
         return Status::NOT_ENOUGH_IDLE_WORKERS;
     }
 
+    if (!b.isTechDeveloped(level)) {
+//        BOOST_ASSERT_MSG(0, "not able to build that level of building");
+        return Status::NO_TECH_DEVELOPED;
+    }
+
     if (rock < b.GetRockCostToBuild(level)) {
 //        BOOST_ASSERT_MSG(0, "not enough rocks");
         return Status::NOT_ENOUGH_ROCKS;
     }
 
-    if (!b.isTechDeveloped(level)) {
-//        BOOST_ASSERT_MSG(0, "not able to build that level of building");
-        return Status::NO_TECH_DEVELOPED;
-    }
     b.Build(level);
     rock -= b.GetRockCostToBuild(level);
     idle_worker--;
@@ -94,15 +97,57 @@ Status Player::BuildLibrary(int level) {
 Status Player::BuildLab(int level) {
     return Build(lab, level);
 }
+Status Player::BuildTheater(int level) {
+    return Build(theater, level);
+}
 
-void Player::IncreasePop() {
 
-    BOOST_ASSERT_MSG(yellow_tokens, "not enough yellow tokens left");
-    if (!yellow_tokens) return;
+Status Player::IncreasePop() {
+
+//    BOOST_ASSERT_MSG(yellow_tokens, "not enough yellow tokens left");
+    if (!yellow_tokens) {
+        return Status::NO_YELLOW_TOKENS_LEFT;
+    }
 
     if (GameEngine::GetCostToIncreasePopulation(yellow_tokens) <= GetFood()) {
         yellow_tokens--;
         idle_worker++;
         food -= GameEngine::GetCostToIncreasePopulation(yellow_tokens);
     }
+
+    return Status::OK;
+}
+
+Status Player::DevelopTech(Building& b, int level) {
+    if (b.GetScienceCostToBuild(level) == Const::InvalidTech) {
+        return Status::INVALID_TECH;
+    }
+    if (b.GetScienceCostToBuild(level) > science) {
+        return Status::NOT_ENOUGH_SCIENCE;
+    }
+    b.DevelopTech(level);
+    science -= b.GetScienceCostToBuild(level);
+    return Status::OK;
+}
+
+Status Player::DevelopLab(int level) {
+    return DevelopTech(lab, level);
+}
+Status Player::DevelopMine(int level) {
+    return DevelopTech(mine, level);
+}
+Status Player::DevelopFarm(int level) {
+    return DevelopTech(farm, level);
+}
+Status Player::DevelopLibrary(int level) {
+    return DevelopTech(library, level);
+}
+Status Player::DevelopTheater(int level) {
+    return DevelopTech(theater, level);
+}
+Status Player::DevelopTemple(int level) {
+    return DevelopTech(temple, level);
+}
+Status Player::DevelopArena(int level) {
+    return DevelopTech(arena, level);
 }

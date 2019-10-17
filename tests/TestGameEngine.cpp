@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../GameEngine.h"
+#include "../GameEngine.hpp"
 
 class GameEngineTest : public ::testing::Test {
 protected:

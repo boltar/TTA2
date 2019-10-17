@@ -2,12 +2,12 @@
 // Created by Tony Cha on 9/29/19.
 //
 
-#ifndef TTA_GAMEENGINE_H
-#define TTA_GAMEENGINE_H
+#ifndef TTA_GAMEENGINE_HPP
+#define TTA_GAMEENGINE_HPP
 
 #include <string>
 #include <map>
-#include "Constants.h"
+#include "Constants.hpp"
 
 using namespace std;
 
@@ -19,6 +19,9 @@ enum class Status {
     NOT_ENOUGH_CIVIL_ACTIONS,
     NOT_EOUGH_MILITARY_ACTIONS,
     NO_TECH_DEVELOPED,
+    NO_YELLOW_TOKENS_LEFT,
+    NO_BLUE_TOKENS_LEFT,
+    INVALID_TECH
 
 };
 enum class BuildingType {
@@ -47,9 +50,7 @@ public:
     static int GetHappyFacesRequired(int yellow_tokens);
     static int GetDiscontentWorkers(int yellow_tokens, int happy_faces);
     static int GetAngryWorkers(int discontented_workers, int idle_workers);
-    static int GetAngryWorkers(int discontented_workers, int idle_workers, int happy_faces);
     static int CalculateCorruption(int blue_tokens);
 };
 
-
-#endif //TTA_GAMEENGINE_H
+#endif //TTA_GAMEENGINE_HPP

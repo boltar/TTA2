@@ -20,5 +20,5 @@ message(STATUS "Boost_VERSION: ${Boost_VERSION}")
 cmake_minimum_required(VERSION 3.15)
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(TTA main.cpp Player.cpp Player.h GameEngine.cpp GameEngine.h Building.cpp Building.h Constants.h)
+add_executable(TTA main.cpp Player.cpp Player.hpp GameEngine.cpp GameEngine.hpp Building.cpp Building.hpp Constants.hpp Match.cpp Match.hpp)
 add_subdirectory(tests)

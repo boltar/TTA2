@@ -2,7 +2,7 @@
 // Created by Tony Cha on 9/29/19.
 //
 
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 //  4   4   4   4   4    2
 // ___ ___ ___ ___ ___ |    |
 // -6  -4  -3  -2  -1  |    |    consumption
@@ -48,14 +48,6 @@ int GameEngine::GetDiscontentWorkers(int yellow_tokens, int happy_faces) {
 
 int GameEngine::GetAngryWorkers(int discontented_workers, int idle_workers) {
 
-    int angry_workers = discontented_workers - idle_workers;
-
-    return angry_workers > 0 ? angry_workers : 0;
-}
-
-int GameEngine::GetAngryWorkers(int yellow_tokens, int idle_workers, int happy_faces) {
-
-    int discontented_workers = GetDiscontentWorkers(yellow_tokens, happy_faces);
     int angry_workers = discontented_workers - idle_workers;
 
     return angry_workers > 0 ? angry_workers : 0;
