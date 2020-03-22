@@ -4,7 +4,6 @@
 
 #include "Player.hpp"
 #include "GameEngine.hpp"
-#include <boost/assert.hpp>
 
 void Player::StartTurn() {
     ResetActions();

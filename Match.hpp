@@ -6,19 +6,33 @@
 #define TTA_MATCH_HPP
 
 #include <vector>
+#include <memory>
 #include "Player.hpp"
+#include "GameDeck.hpp"
+#include "CardRow.hpp"
 class Match {
 
 public:
     Match() = delete;
-    Match(vector<Player>& v): v(v) {}
+
+    Match(vector<Player> &v) : players(v), deck(new GameDeck(v.size())) {
+        card_row.reset(new CardRow(*deck));
+    }
 
 
     void StartMatch();
-    void MainLoop();
-    vector<Player>& GetPlayers() { return v;}
+
+    void AdvanceTurn();
+
+    vector<Player> &GetPlayers() { return players; }
+
 private:
-    vector<Player>& v;
+    vector<Player> &players;
+    //Player &current_player;
+    int currentRound;
+    std::unique_ptr<GameDeck> deck;
+    std::unique_ptr<CardRow> card_row;
+
 };
 
 

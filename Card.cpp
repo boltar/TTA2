@@ -19,3 +19,4 @@ const std::string &Card::getText() const {
 void Card::setText(const std::string &text) {
     Card::text = text;
 }
+
