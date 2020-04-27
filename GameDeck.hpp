@@ -5,6 +5,7 @@
 #ifndef TTA_GAMEDECK_HPP
 #define TTA_GAMEDECK_HPP
 
+#include <memory>
 #include <vector>
 #include "Card.hpp"
 
@@ -14,11 +15,11 @@ public:
     GameDeck() = delete;
     GameDeck(int num_players);
 
-    Card Draw();
+//    Card Draw();
     const int GetCardsRemaining();
 
 private:
-    std::vector<Card> age[4];
+    std::vector<unique_ptr<Card>> age[4];
 
 };
 

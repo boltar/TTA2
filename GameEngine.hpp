@@ -14,6 +14,7 @@ using namespace std;
 enum class Status {
     OK,
     NOT_ENOUGH_ROCKS,
+    NOT_ENOUGH_FOOD,
     NOT_ENOUGH_IDLE_WORKERS,
     NOT_ENOUGH_SCIENCE,
     NOT_ENOUGH_CIVIL_ACTIONS,

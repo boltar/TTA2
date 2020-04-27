@@ -13,24 +13,24 @@
     each deck
  */
 GameDeck::GameDeck(int num_players) {
-    age[0].push_back(RichLandA());
-    age[0].push_back(RichLandA());
-    age[0].push_back(FrugalityA());
-    age[0].push_back(FrugalityA());
-    age[0].push_back(UrbanGrowthA());
-    age[0].push_back(UrbanGrowthA());
-    age[0].push_back(CulturalHeritageA());
-    age[0].push_back(StockPileA());
-    age[0].push_back(Patriotism());
+//    age[0].push_back(new RichLandA());
+//    age[0].push_back(RichLandA());
+//    age[0].push_back(FrugalityA());
+//    age[0].push_back(FrugalityA());
+//    age[0].push_back(UrbanGrowthA());
+//    age[0].push_back(UrbanGrowthA());
+//    age[0].push_back(CulturalHeritageA());
+    age[0].push_back(make_unique<StockPileA>());
+//    age[0].push_back(Patriotism());
     //age[0].push_back(EngineeringGeniusA());
-    age[0].push_back(RichLandA());
-    age[0].push_back(RichLandA());
-    age[0].push_back(FrugalityA());
-    age[0].push_back(FrugalityA());
-    age[0].push_back(UrbanGrowthA());
-    age[0].push_back(UrbanGrowthA());
-    age[0].push_back(CulturalHeritageA());
-    age[0].push_back(StockPileA());
-    age[0].push_back(Patriotism()); // 18 cards for now
+//    age[0].push_back(RichLandA());
+//    age[0].push_back(RichLandA());
+//    age[0].push_back(FrugalityA());
+//    age[0].push_back(FrugalityA());
+//    age[0].push_back(UrbanGrowthA());
+//    age[0].push_back(UrbanGrowthA());
+//    age[0].push_back(CulturalHeritageA());
+//    age[0].push_back(StockPileA());
+//    age[0].push_back(Patriotism()); // 18 cards for now
 }
 

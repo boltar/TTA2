@@ -115,9 +115,31 @@ public:
 
     int GetIdleWorkers() { return idle_worker;}
     int GetRocks() {return rock;}
+
+    void AddRocks(int r) {
+        BOOST_ASSERT_MSG(rock + r >= 0, "sum must be >= 0");
+        rock += r;
+    }
+
+    void AddFood(int f) {
+        BOOST_ASSERT_MSG(food + f >= 0, "sum must be >= 0");
+        food += f;
+    }
+
+    void AddCulture(int c) {
+        BOOST_ASSERT_MSG(culture + c >= 0, "sum must be >= 0");
+        culture += c;
+    }
+
+    void AddScience(int s) {
+        BOOST_ASSERT_MSG(science + s >= 0, "sum must be >= 0");
+        science += s;
+    }
+
     int GetFood() {return food;}
     int GetScience() {return science;}
     int GetCulture() {return culture;}
+    Status CanIncreasePop();
     Status IncreasePop();
     int GetMA() {return ma;}
     int GetCA() {return ca;}

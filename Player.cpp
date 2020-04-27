@@ -101,20 +101,30 @@ Status Player::BuildTheater(int level) {
 }
 
 
-Status Player::IncreasePop() {
-
-//    BOOST_ASSERT_MSG(yellow_tokens, "not enough yellow tokens left");
+Status Player::CanIncreasePop() {
     if (!yellow_tokens) {
         return Status::NO_YELLOW_TOKENS_LEFT;
     }
 
-    if (GameEngine::GetCostToIncreasePopulation(yellow_tokens) <= GetFood()) {
-        yellow_tokens--;
-        idle_worker++;
-        food -= GameEngine::GetCostToIncreasePopulation(yellow_tokens);
+    if (GameEngine::GetCostToIncreasePopulation(yellow_tokens) > GetFood()) {
+        return Status::NOT_ENOUGH_FOOD;
     }
 
     return Status::OK;
+}
+Status Player::IncreasePop() {
+
+//    BOOST_ASSERT_MSG(yellow_tokens, "not enough yellow tokens left");
+
+    Status s = CanIncreasePop();
+    if (s == Status::OK) {
+        yellow_tokens--;
+        idle_worker++;
+        food -= GameEngine::GetCostToIncreasePopulation(yellow_tokens);
+        return Status::OK;
+    }
+
+    return s;
 }
 
 Status Player::DevelopTech(Building& b, int level) {
